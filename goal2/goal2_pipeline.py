@@ -100,17 +100,18 @@ def goal2_pipeline(filepath, group_name, out_csv):
 goal2_pipeline(
     "goal2_data/recombinant.csv",
     "recombinant",
-    "goal2_recombinant_barcodes.csv"
+    "recombinant_barcodes.csv"
 )
 
 goal2_pipeline(
     "goal2_data/nonrecombinant.csv",
     "nonrecombinant",
-    "goal2_nonrecombinant_barcodes.csv"
+    "nonrecombinant_barcodes.csv"
 )
 
 goal2_pipeline(
     "goal2_data/mixed.csv",
     "mixed",
-    "goal2_mixed_barcodes.csv"
+    "mixed_barcodes.csv"
+
 )
