@@ -1,0 +1,71 @@
+!pip install scikit-bio
+
+import pandas as pd
+import numpy as np
+from scipy.stats import wasserstein_distance
+from skbio.stats.distance import DistanceMatrix, permanova
+
+np.random.seed(42)
+
+df = pd.read_csv("noise_levels.csv")
+
+def get_points(subdf):
+    return subdf[['birth', 'death']].to_numpy()
+
+results = {}
+
+for dim in df['dimension'].unique():
+    print(f"\nDimension {dim} ANALYSIS")
+
+    dim_df = df[df['dimension'] == dim].reset_index(drop=True)
+
+    noise_levels = dim_df['level_value'].unique()
+
+    diagrams = []
+    group_labels = []
+    replicate_ids = []
+
+    for level in noise_levels:
+        level_df = dim_df[dim_df['level_value'] == level]
+        for rep in level_df['replicate'].unique():
+            rep_df = level_df[level_df['replicate'] == rep]
+            diagrams.append(get_points(rep_df).flatten())
+            group_labels.append(str(level))
+            replicate_ids.append(f"{level}_rep{rep}")
+
+    n_samples = len(diagrams)
+
+    # p-Wasserstein
+    D = np.zeros((n_samples, n_samples))
+    for i in range(n_samples):
+        for j in range(i + 1, n_samples):
+            D[i, j] = wasserstein_distance(diagrams[i], diagrams[j])
+            D[j, i] = D[i, j]
+
+    dm = DistanceMatrix(D, ids=replicate_ids)
+
+    grouping = pd.Series(group_labels, index=replicate_ids, name='noise_level')
+
+    group_counts = grouping.value_counts()
+    valid_groups = group_counts[group_counts >= 2].index
+    if len(valid_groups) < 2:
+        print(f"Skipping dimension {dim}: not enough replicates per noise level for PERMANOVA")
+        continue
+
+    valid_ids = [rid for rid in replicate_ids if grouping[rid] in valid_groups]
+    indices = [replicate_ids.index(rid) for rid in valid_ids]
+
+    dm_filtered = DistanceMatrix(D[np.ix_(indices, indices)], ids=valid_ids)
+    grouping_filtered = grouping[valid_ids]
+
+    # PERMANOVA
+    res = permanova(distance_matrix=dm_filtered, grouping=grouping_filtered, permutations=999)
+    results[dim] = res
+
+    print(f"F-statistic: {res['test statistic']:.4f}")
+    print(f"p-value:     {res['p-value']:.6f}")
+
+    if res['p-value'] < 0.05:
+        print("Reject H0: topology is not robust to noise")
+    else:
+        print("Fail to reject H0: topology is robust to noise")
