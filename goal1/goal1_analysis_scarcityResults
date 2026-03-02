@@ -1,0 +1,14 @@
+==============================
+Dimension 0 ANALYSIS
+==============================
+Samples:      85
+Groups:       9
+F-statistic:  0.9778
+p-value:      0.464000
+R^2:          0.0933
+Fail to reject H0: topology is robust to data scarcity
+
+==============================
+Dimension 1 ANALYSIS
+==============================
+Skipping: all pairwise distances are zero.
