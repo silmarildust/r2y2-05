@@ -1,0 +1,23 @@
+==============================
+Dimension 0 ANALYSIS
+==============================
+F-statistic: 14.1514
+R²:          0.5996
+p-value:     0.001000
+Reject H0: topology is not robust to noise
+
+==============================
+Dimension 1 ANALYSIS
+==============================
+F-statistic: 2.0192
+R²:          0.1816
+p-value:     0.002000
+Reject H0: topology is not robust to noise
+
+==============================
+Dimension 2 ANALYSIS
+==============================
+F-statistic: 0.1489
+R²:          0.0155
+p-value:     1.000000
+Fail to reject H0: topology is robust to noise
