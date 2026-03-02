@@ -15,7 +15,9 @@ def get_points(subdf):
 results = {}
 
 for dim in df['dimension'].unique():
-    print(f"\nDimension {dim} ANALYSIS")
+    print(f"\n==============================")
+    print(f"Dimension {dim} ANALYSIS")
+    print(f"==============================")
 
     dim_df = df[df['dimension'] == dim].reset_index(drop=True)
 
@@ -59,10 +61,19 @@ for dim in df['dimension'].unique():
     grouping_filtered = grouping[valid_ids]
 
     # PERMANOVA
-    res = permanova(distance_matrix=dm_filtered, grouping=grouping_filtered, permutations=999)
+    res = permanova(distance_matrix=dm_filtered,
+                    grouping=grouping_filtered,
+                    permutations=999)
     results[dim] = res
 
-    print(f"F-statistic: {res['test statistic']:.4f}")
+    F = res['test statistic']
+    k = res['number of groups']
+    N = res['sample size']
+
+    R2 = (F * (k - 1)) / (F * (k - 1) + (N - k))
+
+    print(f"F-statistic: {F:.4f}")
+    print(f"R²:          {R2:.4f}")
     print(f"p-value:     {res['p-value']:.6f}")
 
     if res['p-value'] < 0.05:
