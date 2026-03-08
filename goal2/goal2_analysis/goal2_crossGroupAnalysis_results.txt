@@ -1,14 +1,11 @@
-==============================
 Pairwise comparison: recombinant vs nonrecombinant
-==============================
 
-==============================
+
 Pairwise comparison: recombinant vs mixed
-==============================
 
-==============================
+
 Pairwise comparison: nonrecombinant vs mixed
-==============================
+
 
 === Pairwise comparison summary (H0 rejected = significant difference) ===
 
