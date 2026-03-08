@@ -18,13 +18,13 @@ def get_points(subdf):
     """Flatten birth/death coordinates for Wasserstein."""
     return subdf[['birth', 'death']].to_numpy().flatten()
 
-pairs = list(combinations(dfs.keys(), 2))  # all dataset pairs
+pairs = list(combinations(dfs.keys(), 2))  
 comparison_results = {}
 
 for name1, name2 in pairs:
-    print(f"\n==============================")
+    print()
     print(f"Pairwise comparison: {name1} vs {name2}")
-    print(f"==============================")
+    print()
     
     df1, df2 = dfs[name1], dfs[name2]
     dimensions = sorted(set(df1['dimension'].unique()) & set(df2['dimension'].unique()))
