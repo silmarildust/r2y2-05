@@ -15,6 +15,6 @@ for i in range(1, num_files + 1):
     with open(filename, "w") as f:
         f.write(f">seed_sequence_{i}\n")
         f.write(sequence + "\n")
-    
-
+        
     print(f"File '{filename}' created.")
+
