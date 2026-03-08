@@ -17,4 +17,3 @@ for i in range(1, num_files + 1):
         f.write(sequence + "\n")
         
     print(f"File '{filename}' created.")
-
