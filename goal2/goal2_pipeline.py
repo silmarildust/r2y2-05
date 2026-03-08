@@ -3,18 +3,11 @@ import pandas as pd
 from ripser import ripser
 from scipy.spatial.distance import pdist, squareform
 
-# -----------------------------
-# STEP 1 — Load sequences
-# -----------------------------
 def load_sequences(filepath):
     df = pd.read_csv(filepath, sep=';')
     sequences = df['seqName'].astype(str).tolist()
     return sequences
 
-
-# -----------------------------
-# STEP 2 — Remove bad columns
-# -----------------------------
 def clean_alignment(sequences):
     arr = np.array([list(seq) for seq in sequences])
     
@@ -28,11 +21,7 @@ def clean_alignment(sequences):
 
     cleaned = arr[:, keep_cols]
     return cleaned
-
-
-# -----------------------------
-# STEP 3 — Convert to 0/1 matrix (biallelic)
-# -----------------------------
+    
 def to_binary_matrix(alignment):
     binary = []
 
@@ -44,25 +33,13 @@ def to_binary_matrix(alignment):
 
     return np.array(binary).T
 
-
-# -----------------------------
-# STEP 4 — Hamming distance
-# -----------------------------
 def hamming_matrix(binary_matrix):
     return squareform(pdist(binary_matrix, metric='hamming'))
 
-
-# -----------------------------
-# STEP 5 — Persistent homology
-# -----------------------------
 def compute_ph(distance_matrix, maxdim=2):
     diagrams = ripser(distance_matrix, distance_matrix=True, maxdim=maxdim)['dgms']
     return diagrams
 
-
-# -----------------------------
-# STEP 6 — Save barcodes
-# -----------------------------
 def save_barcodes(diagrams, group_name, outname):
     rows = []
 
@@ -83,10 +60,7 @@ def save_barcodes(diagrams, group_name, outname):
     df.to_csv(outname, index=False)
     print(f"Saved {outname}")
 
-
-# -----------------------------
-# FULL PIPELINE FOR ONE GROUP
-# -----------------------------
+# Full pipeline for one group
 def goal2_pipeline(filepath, group_name, out_csv):
     print(f"\nProcessing {group_name}...")
 
@@ -115,3 +89,4 @@ goal2_pipeline(
     "mixed_barcodes.csv"
 
 )
+
