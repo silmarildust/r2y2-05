@@ -50,10 +50,7 @@ class BiallelicConverter:
         """
         np.savetxt(out_file, matrix, fmt="%d")
 
-# ============================
-# Main workflow
-# ============================
-
+# Main
 if __name__ == "__main__":
     replicate_folder = "simulation replicates"
     out_folder = "biallelic matrices"
@@ -75,4 +72,5 @@ if __name__ == "__main__":
         matrix = converter.convert_to_biallelic(sequences)
         out_file = os.path.join(out_folder, f"01_matrix_{r}.txt")
         converter.save_matrix(matrix, out_file)
+
         print(f"Replicate {r}: biallelic matrix saved to {out_file}")
