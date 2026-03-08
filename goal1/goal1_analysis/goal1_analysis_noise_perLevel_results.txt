@@ -1,0 +1,52 @@
+Dimension 0 ANALYSIS
+
+Noise level 5.0: R²=0.2308, p=0.009000 → Not robust
+Maximum noise where dimension 0 is robust ≤ 0.0
+
+Dimension 1 ANALYSIS
+
+Noise level 5.0: R²=0.2203, p=0.052000 → Robust
+Noise level 10.0: R²=0.1355, p=0.194000 → Robust
+Noise level 15.0: R²=0.1078, p=0.351000 → Robust
+Noise level 20.0: R²=0.0903, p=0.465000 → Robust
+Noise level 25.0: R²=0.0873, p=0.545000 → Robust
+Noise level 30.0: R²=0.0843, p=0.591000 → Robust
+Noise level 35.0: R²=0.0815, p=0.623000 → Robust
+Noise level 40.0: R²=0.0830, p=0.636000 → Robust
+Noise level 45.0: R²=0.0861, p=0.619000 → Robust
+Noise level 50.0: R²=0.0925, p=0.523000 → Robust
+Noise level 55.0: R²=0.0972, p=0.472000 → Robust
+Noise level 60.0: R²=0.1043, p=0.365000 → Robust
+Noise level 65.0: R²=0.1163, p=0.230000 → Robust
+Noise level 70.0: R²=0.1247, p=0.168000 → Robust
+Noise level 75.0: R²=0.1303, p=0.112000 → Robust
+Noise level 80.0: R²=0.1380, p=0.080000 → Robust
+Noise level 85.0: R²=0.1494, p=0.036000 → Not robust
+Maximum noise where dimension 1 is robust ≤ 80.0
+
+Dimension 2 ANALYSIS
+
+Noise level 10.0: R²=0.0598, p=0.295000 → Robust
+Noise level 15.0: R²=0.0435, p=0.594000 → Robust
+Noise level 20.0: R²=0.0362, p=0.801000 → Robust
+Noise level 25.0: R²=0.0330, p=0.901000 → Robust
+Noise level 30.0: R²=0.0315, p=0.947000 → Robust
+Noise level 35.0: R²=0.0293, p=0.973000 → Robust
+Noise level 40.0: R²=0.0272, p=0.993000 → Robust
+Noise level 45.0: R²=0.0249, p=0.999000 → Robust
+Noise level 50.0: R²=0.0230, p=1.000000 → Robust
+Noise level 55.0: R²=0.0217, p=1.000000 → Robust
+Noise level 60.0: R²=0.0207, p=1.000000 → Robust
+Noise level 65.0: R²=0.0192, p=1.000000 → Robust
+Noise level 70.0: R²=0.0186, p=1.000000 → Robust
+Noise level 75.0: R²=0.0178, p=1.000000 → Robust
+Noise level 80.0: R²=0.0174, p=1.000000 → Robust
+Noise level 85.0: R²=0.0167, p=1.000000 → Robust
+Noise level 90.0: R²=0.0163, p=1.000000 → Robust
+Noise level 95.0: R²=0.0159, p=1.000000 → Robust
+Noise level 100.0: R²=0.0155, p=1.000000 → Robust
+
+Maximum robust noise levels per dimension:
+Dimension 0: no robust noise levels
+Dimension 1: maximum robust noise ≤ 80.0
+Dimension 2: maximum robust noise ≤ 100.0
