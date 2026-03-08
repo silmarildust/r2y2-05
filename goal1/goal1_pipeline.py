@@ -5,7 +5,7 @@ from ripser import Rips
 
 class Goal1Pipeline:
     """
-    Pipeline for Goal 1: Testing Noise and Scarcity Robustness using TDA.
+    Pipeline for Goal 1: Testing Noise and Scarcity Robustness
     
     Features:
     - Loads biallelic matrices from disk
@@ -35,9 +35,7 @@ class Goal1Pipeline:
         self.varlist = np.around(np.linspace(0, 100, 21), decimals=2).tolist()
         self.spalist = np.around(np.linspace(0.1, 1.0, 10), decimals=2).tolist()
 
-    # --------------------------
     # Load biallelic matrices
-    # --------------------------
     def load_matrices(self):
         """Load all biallelic matrices (replicates) from folder."""
         matrices = []
@@ -51,9 +49,7 @@ class Goal1Pipeline:
         self.matrices = matrices
         return matrices
 
-    # --------------------------
     # Compute Hamming distance matrix
-    # --------------------------
     def hamming_distance_matrix(self, mat):
         """
         Compute the Hamming distance matrix for a replicate.
@@ -68,9 +64,7 @@ class Goal1Pipeline:
                 hd[j, i] = d
         return hd
 
-    # --------------------------
     # Add Gaussian noise
-    # --------------------------
     def add_noise(self, hd_matrix, var):
         """
         Adds symmetric Gaussian noise to a Hamming distance matrix.
@@ -82,9 +76,7 @@ class Goal1Pipeline:
         np.fill_diagonal(noise, 0)
         return hd_matrix + noise
 
-    # --------------------------
     # Subsample sequences for sparsity
-    # --------------------------
     def sparsity_sample(self, mat, fraction):
         """
         Randomly sample a fraction of sequences to simulate scarcity.
@@ -94,9 +86,7 @@ class Goal1Pipeline:
         idx = np.random.choice(n, k, replace=False)
         return mat[idx, :][:, idx]
 
-    # --------------------------
     # Compute persistence diagrams
-    # --------------------------
     def compute_persistence(self, hd_matrix):
         """
         Compute persistent homology up to self.MAXDIM using Ripser.
@@ -109,11 +99,9 @@ class Goal1Pipeline:
                 diagrams[i] = diagrams[i][np.argsort(diagrams[i][:, 1])]
         return diagrams
 
-    # --------------------------
     # Compute barcode lengths
-    # --------------------------
     def barcode_lengths(self, diagrams):
-        """Compute lengths (death - birth) for each homology dimension."""
+        """Compute lengths (death - birth) for each homology group."""
         lengths = []
         for i in range(self.MAXDIM + 1):
             if diagrams[i].size > 0:
@@ -122,18 +110,14 @@ class Goal1Pipeline:
                 lengths.append(np.array([]))
         return lengths
 
-    # --------------------------
     # Compute Betti numbers
-    # --------------------------
     def betti_numbers(self, diagrams):
         """Count number of intervals per homology dimension."""
         return [len(diagrams[i]) for i in range(self.MAXDIM + 1)]
 
-    # --------------------------
     # Pipeline: Scarcity analysis
-    # --------------------------
     def pipeline_scarcity(self):
-        """Save FULL persistence intervals for scarcity levels."""
+        """Save full persistence intervals for scarcity levels."""
         rows = []
 
         for rep_idx, mat in enumerate(self.matrices):
@@ -149,7 +133,7 @@ class Goal1Pipeline:
                 for dim in range(self.MAXDIM + 1):
                     for birth, death in diagrams[dim]:
 
-                        # Remove infinite deaths (not usable for stats)
+                        # Remove infinite deaths
                         if not np.isfinite(death):
                             continue
 
@@ -167,11 +151,9 @@ class Goal1Pipeline:
         df.to_csv(os.path.join(self.folder, "scarcity_levels.csv"), index=False)
         print("Saved scarcity_levels.csv")
 
-    # --------------------------
     # Pipeline: Noise analysis
-    # --------------------------
     def pipeline_noise(self):
-        """Save FULL persistence intervals for noise levels."""
+        """Save full persistence intervals for noise levels."""
         rows = []
 
         for rep_idx, mat in enumerate(self.matrices):
@@ -205,17 +187,12 @@ class Goal1Pipeline:
         df.to_csv(os.path.join(self.folder, "noise_levels.csv"), index=False)
         print("Saved noise_levels.csv")
 
-# ==========================
-# Example usage
-# ==========================
+# Usage
 folder = "goal1_data/biallelic matrices"  # folder containing 01_matrix_1.txt, 01_matrix_2.txt, ...
 pipeline = Goal1Pipeline(folder, simulations=10)
 
-# Load matrices
 pipeline.load_matrices()
 
-# Run scarcity pipeline
 pipeline.pipeline_scarcity()
 
-# Run noise pipeline
 pipeline.pipeline_noise()
