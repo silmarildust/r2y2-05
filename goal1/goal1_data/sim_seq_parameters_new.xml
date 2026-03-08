@@ -2,9 +2,6 @@
        xsi:noNamespaceSchemaLocation="santa.xsd">
 
     <!--
-    ============================================================
-    REPLICATES
-    ============================================================
     Number of independent simulations to run. Each replicate produces
     its own FASTA alignment and statistics files.
     -->
@@ -13,28 +10,20 @@
     <simulation>
 
         <!--
-        ============================================================
-        GENOME DEFINITION
-        ============================================================
         Defines the genome that will evolve in the simulation.
         -->
         <genome>
 
             <!-- Total length of the genome in nucleotides -->
             <length>2501</length>
-
-            <!--
-            Initial sequence file.
-            SANTA will start evolution from this sequence.
-            Use a realistic base sequence, not all A's.
-            -->
+              
             <sequences file="base seeds/base_seed_10.fasta"/>
 
             <!--
             Feature definition:
-            - Entire genome treated as one selectable region.
-            - Coordinates: 1-2501.
-            - Type: nucleotide (DNA/RNA sequence).
+            - Entire genome treated as one selectable region
+            - Coordinates: 1-2501
+            - Type: nucleotide (DNA/RNA sequence)
             -->
             <feature>
                 <name>genome</name>
@@ -45,12 +34,9 @@
         </genome>
 
         <!--
-        ============================================================
-        POPULATION PARAMETERS
-        ============================================================
-        - populationSize: number of individuals in the simulation.
+        - populationSize: number of individuals in the simulation
         - inoculum: "all" means every genome in the initial population
-          starts as a copy of the sequence in the seed file.
+          starts as a copy of the sequence in the seed file
         -->
         <population>
             <populationSize>100</populationSize>
@@ -58,14 +44,11 @@
         </population>
 
         <!--
-        ============================================================
-        FITNESS FUNCTION
-        ============================================================
         Purifying fitness:
-        - 70% of sites under purifying selection, rest neutral.
-        - Each nucleotide site is ranked by how fit each base is.
-        - Most fit base = 1.0, less fit = linearly decreasing to lowFitness.
-        - Sites beyond selection region get neutral fitness.
+        - 70% of sites under purifying selection, rest neutral
+        - Each nucleotide site is ranked by how fit each base is
+        - Most fit base = 1.0, less fit = linearly decreasing to lowFitness
+        - Sites beyond selection region get neutral fitness
         -->
         <fitnessFunction>
 
@@ -99,13 +82,10 @@
         </fitnessFunction>
 
         <!--
-        ============================================================
-        RECOMBINATION MODEL
-        ============================================================
         Allows two genomes to recombine during replication if they co-infect.
         Parameters:
-        - dualInfectionProbability: chance that a host has two genomes for recombination.
-        - recombinationProbability: chance of crossover per replication event.
+        - dualInfectionProbability: chance that a host has two genomes for recombination
+        - recombinationProbability: chance of crossover per replication event
         -->
         <replicator>
             <recombinantReplicator>
@@ -115,15 +95,11 @@
         </replicator>
 
         <!--
-        ============================================================
-        MUTATION MODEL
-        ============================================================
         Controls how genomes mutate each generation.
         Parameters:
-        - mutationRate: per-site mutation probability per generation.
+        - mutationRate: per-site mutation probability per generation
           (0.002 = 0.2% chance per nucleotide per generation)
         - transitionBias: transitions occur twice as often as transversions
-          (biologically realistic for DNA/RNA evolution)
         -->
         <mutator>
             <nucleotideMutator>
@@ -133,9 +109,6 @@
         </mutator>
 
         <!--
-        ============================================================
-        EVOLUTION TIME
-        ============================================================
         Defines the duration of the simulation.
         - generationCount: total number of generations to simulate.
           Here: 5000 generations for sufficient accumulation of mutations
@@ -147,15 +120,14 @@
         </epoch>
 
         <!--
-        ============================================================
-        SAMPLING
-        ============================================================
         Specifies when and how to sample genomes from the population.
-        Single replicate with manual file naming.
         -->
         <samplingSchedule>
 
-            <!-- Sample entire population at the final generation -->
+            <!-- 
+            Sample entire population at the final generation.
+            There is only one replicate per run because each run is evolving from a different base sequence.
+            -->
             <sampler>
                 <atGeneration>5000</atGeneration>
                 <fileName>replicate_10.fasta</fileName>
@@ -167,8 +139,7 @@
                     <label>seq_10_%s</label>
                 </alignment>
             </sampler>
-
-            <!-- Optional statistics output at the final generation -->
+               
             <sampler>
                 <atGeneration>5000</atGeneration>
                 <fileName>stats_10.csv</fileName>
@@ -178,4 +149,5 @@
         </samplingSchedule>
 
     </simulation>
+
 </santa>
